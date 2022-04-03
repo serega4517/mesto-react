@@ -1,32 +1,15 @@
 import React from 'react';
-import logo from '../images/header-logo.svg'
+import Header from "./Header";
+import Main from "./Main";
+import Footer from "./Footer";
 
 function App() {
   return (
     <>
       <div className="page">
-        <header className="header">
-          <img className="header__logo" src={logo} alt="Логотип сервиса" />
-        </header>
-
-        <main className="content">
-          <section className="profile">
-            <img className="profile__avatar" src="../images/avatar.png" alt="Фото профиля" />
-              <button className="profile__avatar-edit-button" />
-              <h1 className="profile__user-name">Жак-Ив Кусто</h1>
-              <button className="profile__edit-button" type="button" />
-              <p className="profile__user-job">Исследователь океана</p>
-              <button className="profile__add-button" type="button" />
-          </section>
-
-          <section className="elements">
-
-          </section>
-        </main>
-
-        <footer className="footer">
-          <p className="footer__copyright">&copy; 2021 Mesto Russia</p>
-        </footer>
+        <Header />
+        <Main />
+        <Footer />
       </div>
 
       <div className="popup popup_type_profile">
