@@ -1,28 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import api from "../utils/api";
 import Card from "./Card";
 
-function Main(props) {
-  const [userName, setUserName] = React.useState();
-  const [userDescription, setUserDescription] = React.useState();
-  const [userAvatar, setUserAvatar] = React.useState();
-  const [cards, setCards] = React.useState([]);
+function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
+  const [userName, setUserName] = useState('');
+  const [userDescription, setUserDescription] = useState('');
+  const [userAvatar, setUserAvatar] = useState('');
+  const [cards, setCards] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     api.getProfile()
       .then((data) => {
         setUserName(data.name);
         setUserDescription(data.about);
         setUserAvatar(data.avatar);
       });
-  })
+  }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     api.getInitialCards()
       .then((cards) => {
         setCards(cards);
       });
-  })
+  }, [])
 
   return (
     <main className="content">
@@ -31,31 +31,29 @@ function Main(props) {
              src={userAvatar}
              alt="Фото профиля"
         />
-        <button onClick={props.onEditAvatar}
+        <button onClick={onEditAvatar}
                 className="profile__avatar-edit-button"
                 type="button"
         />
         <h1 className="profile__user-name">{userName}</h1>
-        <button onClick={props.onEditProfile}
+        <button onClick={onEditProfile}
                 className="profile__edit-button"
                 type="button"
         />
         <p className="profile__user-job">{userDescription}</p>
-        <button onClick={props.onAddPlace}
+        <button onClick={onAddPlace}
                 className="profile__add-button"
                 type="button"
         />
       </section>
 
       <section className="elements">
-        {cards.map((card) => {
-          return (
+        {cards.map((card) => (
             <Card card={card}
                   key={card._id}
-                  onCardClick={props.onCardClick}
+                  onCardClick={onCardClick}
             />
-          );
-        })}
+        ))}
       </section>
     </main>
   );
