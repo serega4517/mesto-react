@@ -37,8 +37,9 @@ function Main(props) {
 
       <section className="elements">
         {cards.map((card) => {
+          // console.log(card._id)
           return (
-            <Card card={card} />
+            <Card card={card} key={card._id}/>
           );
         })}
       </section>
