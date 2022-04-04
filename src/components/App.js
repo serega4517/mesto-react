@@ -2,89 +2,111 @@ import React from 'react';
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
+import PopupWithForm from "./PopupWithForm";
+import ImagePopup from "./ImagePopup";
 
 function App() {
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+
+
+  function handleEditProfileClick() {
+    setIsEditProfilePopupOpen(true);
+  }
+
+  function handleAddPlaceClick() {
+    setIsAddPlacePopupOpen(true);
+  }
+
+  function handleEditAvatarClick() {
+    setIsEditAvatarPopupOpen(true);
+  }
+
+  function closeAllPopups() {
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+  }
+
+
   return (
     <>
       <div className="page">
         <Header />
-        <Main />
+        <Main
+          onEditProfile={handleEditProfileClick}
+          onAddPlace={handleAddPlaceClick}
+          onEditAvatar={handleEditAvatarClick}
+        />
         <Footer />
       </div>
 
-      <div className="popup popup_type_profile">
-        <div className="popup__container">
-          <h3 className="popup__title">Редактировать профиль</h3>
-          <form className="popup__form popup__form-profile" name="profile" autoComplete="off" noValidate>
+      <PopupWithForm
+        title='Редактировать профиль'
+        name='profile'
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+        children={
+          <>
             <div className="input-container">
               <input className="popup__input popup__input_type_name" id="name-input" placeholder="Имя" name="name"
                      type="text" minLength="2" maxLength="40" required />
-                <span className="popup__input-error name-input-error" />
+              <span className="popup__input-error name-input-error" />
             </div>
             <div className="input-container">
-              <input className="popup__input popup__input_type_job" id="job-input" placeholder="Профессия" name="job"
-                     type="text" minLength="2" maxLength="200" required />
-                <span className="popup__input-error job-input-error" />
+            <input className="popup__input popup__input_type_job" id="job-input" placeholder="Профессия" name="job"
+            type="text" minLength="2" maxLength="200" required />
+            <span className="popup__input-error job-input-error" />
             </div>
-            <button className="popup__save-button" type="submit">Сохранить</button>
-          </form>
-          <button className="popup__close-button" type="button" />
-        </div>
-      </div>
+          </>
+        }
+      />
 
-      <div className="popup popup_type_new-card">
-        <div className="popup__container">
-          <h3 className="popup__title">Новое место</h3>
-          <form className="popup__form popup__form-image" name="new-place" autoComplete="off" noValidate>
+      <PopupWithForm
+        title='Новое место'
+        name='new-card'
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+        children={
+          <>
             <div className="input-container">
               <input className="popup__input popup__input_type_title" id="place-input" placeholder="Название" name="name"
                      type="text" minLength="2" maxLength="30" required />
-                <span className="popup__input-error place-input-error" />
+              <span className="popup__input-error place-input-error" />
             </div>
             <div className="input-container">
               <input className="popup__input popup__input_type_link" id="link-input" placeholder="Ссылка на картинку"
                      name="link" type="url" required />
-                <span className="popup__input-error link-input-error" />
+              <span className="popup__input-error link-input-error" />
             </div>
-            <button className="popup__save-button popup__add-button" type="submit">Создать</button>
-          </form>
-          <button className="popup__close-button popup__close-button_card" type="button" />
-        </div>
-      </div>
+          </>
+        }
+      />
 
-      <div className="popup popup_type_fullscreen-image">
-        <div className="popup__image-container">
-          <img className="popup__image" src="#" alt="" />
-            <p className="popup__image-description" />
-            <button className="popup__close-button popup__close-button_fullscreen-image" type="button" />
-        </div>
-      </div>
-
-      <div className="popup popup popup_card-remove">
-        <div className="popup__container">
-          <h3 className="popup__title">Вы уверены?</h3>
-          <form className="popup__form" name="confirm">
-            <button className="popup__save-button popup__save-button_card-remove" type="submit">Да</button>
-          </form>
-          <button className="popup__close-button" type="button" />
-
-        </div>
-      </div>
-
-      <div className="popup popup_avatar-edit">
-        <div className="popup__container">
-          <h3 className="popup__title">Обновить аватар</h3>
-          <form className="popup__form popup__form-image" name="edit-avatar" autoComplete="off" noValidate>
+      <PopupWithForm
+        title='Обновить аватар'
+        name='avatar-edit'
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+        children={
+          <>
             <div className="popup__wrapper">
               <input className="popup__input popup__input_avatar-edit" id="avatar-input" placeholder="Ссылка на картинку"
                      name="avatar" type="url" required />
-                <span className="popup__input-error avatar-input-error" />
+              <span className="popup__input-error avatar-input-error" />
             </div>
-            <button className="popup__save-button popup__add-button" type="submit">Сохранить</button>
-          </form>
-          <button className="popup__close-button" type="button" />
-        </div>
-      </div>
+          </>
+        }
+      />
+
+      <PopupWithForm
+        title='Вы уверены?'
+        name='card-remove'
+      />
+
+      <ImagePopup />
+
     </>
   );
 }
