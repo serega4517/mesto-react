@@ -20,6 +20,14 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
   }
 
 
+  function handleCardDelete(card) {
+    api.deleteCard(card._id)
+      .then(() => {
+        setCards((state) => state.filter((c) => c._id !== card._id));
+      })
+  }
+
+
   useEffect(() => {
     api.getInitialCards()
       .then((cards) => {
@@ -56,6 +64,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
                   key={card._id}
                   onCardClick={onCardClick}
                   onCardLike={handleCardLike}
+                  onCardDelete={handleCardDelete}
             />
         ))}
       </section>
