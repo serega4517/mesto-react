@@ -73,6 +73,10 @@ class Api {
       .then(this._getResponseData);
   }
 
+  changeLikeCardStatus(id, isLiked) {
+    return isLiked ? this.addLike(id) : this.deleteLike(id);
+  }
+
   changeAvatar(data) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",

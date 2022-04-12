@@ -1,7 +1,7 @@
 import React from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
-function Card({ card, onCardClick }) {
+function Card({ card, onCardClick, onCardLike }) {
   const currentUser = React.useContext(CurrentUserContext);
 
   const isOwn = card.owner._id === currentUser._id;
@@ -18,6 +18,10 @@ function Card({ card, onCardClick }) {
     onCardClick(card);
   }
 
+  function handleLikeClick() {
+    onCardLike(card)
+  }
+
   return (
     <div className="element">
       <img className="element__image"
@@ -29,6 +33,7 @@ function Card({ card, onCardClick }) {
         <div className="element__like-container">
           <button className={cardLikeButtonClassName}
                   type="button"
+                  onClick={handleLikeClick}
           />
           <span className="element__like-counter">{card.likes.length}</span>
         </div>
