@@ -7,6 +7,7 @@ import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -42,6 +43,15 @@ function App() {
 
   function handleUpdateUser(name, about) {
     api.editProfile(name, about)
+      .then((data) => {
+        setCurrentUser(data);
+
+        closeAllPopups();
+      })
+  }
+
+  function handleUpdateAvatar(avatar) {
+    api.changeAvatar(avatar)
       .then((data) => {
         setCurrentUser(data);
 
@@ -106,23 +116,10 @@ function App() {
         </div>
       </PopupWithForm>
 
-      <PopupWithForm
-        title='Обновить аватар'
-        name='avatar-edit'
-        isOpen={isEditAvatarPopupOpen}
-        onClose={closeAllPopups}
-      >
-        <div className="popup__wrapper">
-          <input className="popup__input popup__input_avatar-edit"
-                 id="avatar-input"
-                 placeholder="Ссылка на картинку"
-                 name="avatar"
-                 type="url"
-                 required
-          />
-          <span className="popup__input-error avatar-input-error" />
-        </div>
-      </PopupWithForm>
+      <EditAvatarPopup isOpen={isEditAvatarPopupOpen}
+                       onClose={closeAllPopups}
+                       onUpdateAvatar={handleUpdateAvatar}
+      />
 
       <PopupWithForm
         title='Вы уверены?'
