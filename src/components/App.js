@@ -1,23 +1,22 @@
-import React, {useEffect, useState} from "react";
-import Header from "./Header";
-import Main from "./Main";
-import Footer from "./Footer";
-import PopupWithForm from "./PopupWithForm";
-import ImagePopup from "./ImagePopup";
-import api from "../utils/api";
 import CurrentUserContext from "../contexts/CurrentUserContext";
+import React, {useEffect, useState} from "react";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
+import PopupWithForm from "./PopupWithForm";
+import ImagePopup from "./ImagePopup";
+import api from "../utils/api";
+import Footer from "./Footer";
+import Header from "./Header";
+import Main from "./Main";
 
 function App() {
+  const [currentUser, setCurrentUser] = useState('');
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [cards, setCards] = useState([]);
-
-  const [currentUser, setCurrentUser] = useState('');
 
 
   function handleEditProfileClick() {
@@ -109,29 +108,29 @@ function App() {
       <div className="page">
         <Header />
         <Main
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onEditAvatar={handleEditAvatarClick}
-          onCardClick={handleCardClick}
           cards={cards}
           onCardLike={handleCardLike}
+          onCardClick={handleCardClick}
           onCardDelete={handleCardDelete}
+          onAddPlace={handleAddPlaceClick}
+          onEditAvatar={handleEditAvatarClick}
+          onEditProfile={handleEditProfileClick}
         />
         <Footer />
       </div>
 
-      <EditProfilePopup isOpen={isEditProfilePopupOpen}
-                        onClose={closeAllPopups}
+      <EditProfilePopup onClose={closeAllPopups}
+                        isOpen={isEditProfilePopupOpen}
                         onUpdateUser={handleUpdateUser}
       />
 
-      <AddPlacePopup isOpen={isAddPlacePopupOpen}
-                     onClose={closeAllPopups}
+      <AddPlacePopup onClose={closeAllPopups}
+                     isOpen={isAddPlacePopupOpen}
                      onAddPlace={handleAddPlaceSubmit}
       />
 
-      <EditAvatarPopup isOpen={isEditAvatarPopupOpen}
-                       onClose={closeAllPopups}
+      <EditAvatarPopup onClose={closeAllPopups}
+                       isOpen={isEditAvatarPopupOpen}
                        onUpdateAvatar={handleUpdateAvatar}
       />
 
