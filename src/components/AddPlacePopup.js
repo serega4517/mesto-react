@@ -18,6 +18,9 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
     e.preventDefault();
 
     onAddPlace(name, link);
+
+    setName('');
+    setLink('');
   }
 
 
@@ -38,6 +41,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
                minLength="2"
                maxLength="30"
                onChange={handleChangeName}
+               value={name}
                required
         />
         <span className="popup__input-error place-input-error" />
@@ -49,6 +53,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
                name="link"
                type="url"
                onChange={handleChangeLink}
+               value={link}
                required
         />
         <span className="popup__input-error link-input-error" />

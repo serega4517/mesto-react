@@ -11,7 +11,7 @@ import Header from "./Header";
 import Main from "./Main";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState('');
+  const [currentUser, setCurrentUser] = useState({});
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -49,6 +49,9 @@ function App() {
 
         closeAllPopups();
       })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 
   function handleUpdateAvatar(avatar) {
@@ -57,6 +60,9 @@ function App() {
         setCurrentUser(data);
 
         closeAllPopups();
+      })
+      .catch((error) => {
+        console.log(error);
       })
   }
 
@@ -68,7 +74,10 @@ function App() {
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-      });
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 
   function handleCardDelete(card) {
@@ -76,12 +85,18 @@ function App() {
       .then(() => {
         setCards((state) => state.filter((c) => c._id !== card._id));
       })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 
   function handleAddPlaceSubmit(name, link) {
     api.addCard(name, link)
       .then((newCard) => {
         setCards([newCard, ...cards]);
+      })
+      .catch((error) => {
+        console.log(error);
       })
 
     closeAllPopups();
@@ -93,13 +108,19 @@ function App() {
       .then((res) => {
         setCurrentUser(res)
       })
+      .catch((error) => {
+        console.log(error);
+      })
   }, [])
 
   useEffect(() => {
     api.getInitialCards()
       .then((cards) => {
         setCards(cards);
-      });
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }, [])
 
 
