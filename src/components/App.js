@@ -116,6 +116,19 @@ function App() {
   }, [])
 
   useEffect(() => {
+    function handleOverlayClose(e) {
+      if (e.target.classList.contains('popup_opened')) {
+        closeAllPopups()
+      }
+    }
+    document.addEventListener('click', handleOverlayClose)
+
+    return () => {
+      document.removeEventListener('click', handleOverlayClose)
+    }
+  }, [])
+
+  useEffect(() => {
     api.getProfile()
       .then((res) => {
         setCurrentUser(res)
