@@ -102,6 +102,18 @@ function App() {
     closeAllPopups();
   }
 
+  useEffect(() => {
+    function handleEscClose(e) {
+      if (e.key === 'Escape') {
+        closeAllPopups()
+      }
+    }
+    document.addEventListener('keydown', handleEscClose)
+
+    return () => {
+      document.removeEventListener('keydown', handleEscClose)
+    }
+  }, [])
 
   useEffect(() => {
     api.getProfile()
